@@ -16,3 +16,34 @@
     
 </head>
 <body>
+<body>
+<div id="header">
+        <h1>Wallet</h1>
+
+        <div id="menu">
+            <ul>
+                <li><a href="./index.php">Home</a></li>
+                <li><a href="./archiv.php">Archiv</a></li>
+                
+            </ul>
+        </div>
+    </div>
+<h3 id="titel">Wallet</h3>
+<h3 id="titel">Login</h3>
+<form action="/ipa/IPA-Testlauf/after_login.php" method="post">
+        <label for="uname">Benutzername</label><br>
+        <input type="text" id="uname" name="uname" value="" placeholder="Username" required><br>
+        <label for="pwort">Passwort</label><br>
+        <input type="password" id="pwort" name="pwort" value="" placeholder="Passwort" required><br>
+        <input type="submit" value="Login">
+        <input type="reset" value="Zurücksetzen">
+    </form>
+    
+
+
+    <div id="impressum">
+         Impressum:<br/><br/> Herausgeber: <br/>Robin Rütter <br/>Rüchiweg 21 <br/>CH-4106 Therwil <br/>E-Mail: robin.ruetter@bluewin.ch <br/> <br/> <br/> Inhalt: <br/> <br/> Von verschiedene Benutzern erstellte News. <br/> <br/> <br/>
+    </div>
+   
+
+</body>
