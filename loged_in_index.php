@@ -122,52 +122,6 @@ $stmt->close();
 ?>
 
 
-<!-- Kategorie-Filter -->
-<h2>Nach Kategorie filtern</h2>
-<form action="" method="post">
-    <label for="category">Wähle eine Kategorie:</label>
-    <select name="category" id="category">
-        <option value="">Alle Kategorien</option>
-        <!-- Populate the options with the specific categories -->
-        <option value="1">Schule</option>
-        <option value="2">Freizeit</option>
-        <option value="3">Sport</option>
-        <option value="4">Sonstiges</option>
-    </select>
-    <input type="submit" name="filter" value="Filtern">
-</form>
-
-
-<?php
-// Filter the news by category
-if (isset($_POST['filter'])) {
-    $category = $_POST['category'];
-
-    // Check if the user has selected a category
-    if ($category != "") {
-        $stmt = $conn->prepare("SELECT n.newsID, n.titel, n.bild, n.gueltigBis, k.kategorie FROM news AS n INNER JOIN kategories AS k ON n.kid = k.kid WHERE n.gueltigBis >= NOW() AND n.kid = ? ORDER BY n.erstelltam DESC");
-        $stmt->bind_param("i", $category);
-    } else {
-        $stmt = $conn->prepare("SELECT n.newsID, n.titel, n.bild, n.gueltigBis, k.kategorie FROM news AS n INNER JOIN kategories AS k ON n.kid = k.kid WHERE n.gueltigBis >= NOW() ORDER BY n.erstelltam DESC");
-    }
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-    // Check if there are any news
-    if ($result->num_rows > 0) {
-        echo "<h2>Gefilterte News</h2>";
-
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='news'>";
-            echo "<a href='li_news_detail.php?newsID=" . $row['newsID'] . "'><h3>" . $row['titel'] . "</h3></a>";
-            echo "<img src='" . $row['bild'] . "' alt='Bild zur News'>";
-            echo "<p>Kategorie: " . $row['kategorie'] . "</p>";
-            echo "</div>";
-        }
-    } else {
-        echo "<p>Keine aktuellen News verfügbar.</p>";
-    }}
-    ?>
 
     </div>
     <div id="impressum">
