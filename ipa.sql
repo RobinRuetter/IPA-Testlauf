@@ -13,3 +13,5 @@ CREATE TABLE `users` (
   `Benutzername` varchar(20) NOT NULL,
   `Passwort` varchar(255) NOT NULL
 );
+ALTER TABLE `ticket`
+  ADD PRIMARY KEY (`ticketID`);
