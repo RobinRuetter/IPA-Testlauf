@@ -21,8 +21,7 @@
         <div id="menu">
             <ul>
                 <li><a href="./login.php">Login</a></li>
-                <li><a href="./archive.php">Archive</a></li>
-                <li><a href="./singeup.php">Anmelden</a></li>
+                <li><a href="./anmelden.php">Anmelden</a></li>
 
             </ul>
         </div>
