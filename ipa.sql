@@ -15,3 +15,7 @@ CREATE TABLE `users` (
 );
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`ticketID`);
+
+ALTER TABLE `users`
+    ADD PRIMARY KEY (`nutzerid`);
+    
