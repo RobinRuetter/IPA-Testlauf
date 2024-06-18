@@ -14,4 +14,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="colors.css">
     </head>
+    <body>
+    <div id="header">
+        <h1>News der IMS Basel</h1>
+
+        <div id="menu">
+            <ul>
+                <li><a href="./login.php">Login</a></li>
+                <li><a href="./archive.php">Archive</a></li>
+                <li><a href="./singeup.php">Anmelden</a></li>
+
+            </ul>
+        </div>
+    </div>
 </html>
