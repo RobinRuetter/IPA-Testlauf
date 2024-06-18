@@ -70,6 +70,7 @@
     <?php
 
 // Prepare the SQL statement to retrieve tickets for the user with ID 1
+$num =$_SESSION['id'];
 $stmt = $conn->prepare("
     SELECT 
         t.ticketID,
@@ -87,7 +88,7 @@ $stmt = $conn->prepare("
     JOIN 
         users u ON t.nutzerid = u.nutzerid
     WHERE 
-        t.nutzerid = 1
+        t.nutzerid = $num
     ORDER BY 
         t.erstelltam DESC
 ");
@@ -96,7 +97,7 @@ $result = $stmt->get_result();
 
 // Check if there are any tickets for the user with ID 1
 if ($result->num_rows > 0) {
-    echo "<h2>Tickets für Nutzer mit ID 1</h2>";
+    echo "<h2>Tickets für Nutzer mit ID $num</h2>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<div class='ticket'>";
@@ -115,7 +116,7 @@ if ($result->num_rows > 0) {
         echo "</div>";
     }
 } else {
-    echo "<p>Keine Tickets für Nutzer mit ID 1 verfügbar.</p>";
+    echo "<p>Keine Tickets für Nutzer mit ID $num verfügbar.</p>";
 }
 
 $stmt->close();
