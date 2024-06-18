@@ -70,7 +70,7 @@
     <?php
 
 // Prepare the SQL statement to retrieve tickets for the user with ID 1
-$num =$_SESSION['id'];
+$num = $_SESSION['id'];
 $stmt = $conn->prepare("
     SELECT 
         t.ticketID,
@@ -111,7 +111,10 @@ if ($result->num_rows > 0) {
             echo "<p>Link: <a href='" . $row['link'] . "'>" . $row['link'] . "</a></p>";
         }
         if ($row['datei']) {
-            echo "<p>Datei: <a href='data:application/octet-stream;base64," . base64_encode($row['datei']) . "' download='datei'>Download Datei</a></p>";
+            // Display the PDF file inline
+            $pdfData = base64_encode($row['datei']);
+            echo "<p>PDF-Datei: </p>";
+            echo "<iframe src='data:application/pdf;base64," . $pdfData . "' width='600' height='400'></iframe>";
         }
         echo "</div>";
     }
@@ -121,6 +124,8 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 ?>
+
+
 
 
 
