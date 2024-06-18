@@ -16,7 +16,7 @@
     </head>
     <body>
     <div id="header">
-        <h1>News der IMS Basel</h1>
+        <h1>Wallet</h1>
 
         <div id="menu">
             <ul>
