@@ -14,8 +14,8 @@ CREATE TABLE `users` (
   `Passwort` varchar(255) NOT NULL
 );
 ALTER TABLE `ticket`
-  ADD PRIMARY KEY (`ticketID`);
+    ADD PRIMARY KEY (`ticketID`);
 
 ALTER TABLE `users`
     ADD PRIMARY KEY (`nutzerid`);
-    
+
