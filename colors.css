@@ -1,0 +1,50 @@
+/*algemeine Eigenschaften des Headers*/
+#header h1 {
+    font-size: 300%;
+    background-color: green;
+    height: 10%;
+    padding: 15px;
+    margin: unset;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+/*ändern des Menues von vertikal auf horizontal*/
+#header li {
+    display: inline;
+    padding-left: 15%;
+    font-family: 'Roboto', sans-serif;
+}
+/*aussehen des Menues*/
+#header ul {
+    height: 5%;
+    background-color: red;
+    margin: unset;
+    font-size: 150%;
+    font-family: 'Roboto', sans-serif;
+}
+/*algemeines aussehen des Bodys*/
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 150%;
+}
+/*aussehen des Titels*/
+h3#titel  {
+    font-family: 'Roboto', sans-serif;
+    font-size: 150%;
+}
+/*aussehen der Fotobereiche*/
+div.fotos {
+    float: left;
+}
+/*aussehen des Impressums*/
+div#impressum {
+    background-color: green;
+}
+/*aussehen des Textes*/
+div.text {
+    font-family: 'Roboto', sans-serif; font-size: 150%;
+}
+/*aussehen des Textes*/
+p {
+    font-family: 'Roboto', sans-serif; font-size: 150%;
+}
