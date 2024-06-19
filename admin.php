@@ -138,61 +138,6 @@
 <br><br>
 <?php
 
-
-if (isset($_POST['submit'])){
-    // Überprüfen Sie, ob alle erforderlichen Felder ausgefüllt sind
-    if (empty($_POST['titel']) || empty($_POST['gueltigVon']) || empty($_POST['gueltigBis'])) {
-        echo "Bitte füllen Sie alle Felder aus";
-        exit;
-    }
-
-    // Überprüfen Sie, ob die Datei hochgeladen wurde
-    if (isset($_FILES['datei']) && $_FILES['datei']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['datei']['tmp_name'];
-        $fileName = $_FILES['datei']['name'];
-        $fileSize = $_FILES['datei']['size'];
-        $fileType = $_FILES['datei']['type'];
-        
-        // Überprüfen Sie die Dateigröße (z.B. max 16MB)
-        $maxFileSize = 16 * 1024 * 1024; // 16 MB
-        if ($fileSize > $maxFileSize) {
-            echo "Die Datei ist zu groß. Die maximale Dateigröße beträgt 16MB.";
-            exit;
-        }
-
-        // Lesen Sie den Inhalt der Datei
-        $fileContent = file_get_contents($fileTmpPath);
-    } else {
-        echo "Fehler beim Hochladen der Datei.";
-        exit;
-    }
-
-    // Setzen Sie die Datenbankfelder
-    $titel = $_POST['titel'];
-    $gueltigVon = $_POST['gueltigVon'];
-    $gueltigBis = $_POST['gueltigBis'];
-    $erstelltam = date("Y-m-d H:i:s");
-    $nutzerid = $_SESSION['id'];
-    $link = $_POST['link'];
-
-    // Bereiten Sie die SQL-Abfrage vor
-    $stmt = $conn->prepare("INSERT INTO ticket (titel, gueltigVon, gueltigBis, erstelltam, nutzerid, link, datei) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssiss", $titel, $gueltigVon, $gueltigBis, $erstelltam, $nutzerid, $link, $null);
-    $null = NULL; // Platzhalter für den Dateiinhalt
-
-    // Fügen Sie die Datei mit send_long_data() ein
-    $stmt->send_long_data(6, $fileContent);
-    
-    if ($stmt->execute()) {
-        echo "Das Ticket wurde erfolgreich erstellt.";
-    } else {
-        echo "Fehler beim Erstellen des Tickets: " . $stmt->error;
-    }
-    $stmt->close();
-    // Seite neu laden
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-/*
 if (isset($_POST['submit'])){
     // Validate input
     if (empty($_POST['titel']) || empty($_POST['gueltigVon']) || empty($_POST['gueltigBis'])) {
@@ -246,7 +191,8 @@ if (isset($_POST['submit'])){
     $stmt->close();
     // Reload page
     echo "<meta http-equiv='refresh' content='0'>";
-*/
+}
+
 ?>
 
 
