@@ -68,7 +68,7 @@
     
     ?>
     <div id="header">
-        <h1>News der IMS Basel</h1>
+        <h1>Wallet</h1>
 
         <div id="menu">
             <ul>
@@ -79,7 +79,7 @@
             </ul>
         </div>
     </div>
-    <h3 id="titel">News der IMS Basel</h3>
+    <h3 id="titel">Wallet</h3>
     <div>
     <h3 id="titel">Paswort ändern</h3>
     <form action="" method="post">
@@ -351,3 +351,4 @@ if (isset($_POST['submit'])){
 
     
 </body>
+</html>
