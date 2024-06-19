@@ -199,69 +199,59 @@ if (isset($_POST['submit'])){
 <br>
 </div>
 
-    <h3 id="titel">News Löschen</h3>
-    <div>
-        <?php
-        //delete news
-        //get news with stmt
-        $stmt = $conn->prepare("SELECT newsid,titel, inhalt, gueltigVon, gueltigBis, erstelltam, kategorie, link, bild, autor FROM news INNER JOIN kategories ON news.kid = kategories.kid WHERE autor = ?");
-        $stmt->bind_param("i", $autor);
-        $autor = $_SESSION['id'];
-        $stmt->execute();
-        $result = $stmt->get_result();
-        //create table
-        echo "<table>";
-        echo "<tr>";
-        echo "<th>Titel</th>";
-        echo "<th>Inhalt</th>";
-        echo "<th>Gültig von</th>";
-        echo "<th>Gültig bis</th>";
-        echo "<th>Erstellt am</th>";
-        echo "<th>Kategorie</th>";
-        echo "<th>Link</th>";
-        echo "<th>Bild</th>";
-        
-        echo "<th>Löschen</th>";
-        echo "</tr>";
-        //fill table with data
-        while ($row = $result->fetch_assoc()){
-            echo "<tr>";
-            echo "<td>" . $row['titel'] . "</td>";
-            echo "<td>" . $row['inhalt'] . "</td>";
-            echo "<td>" . $row['gueltigVon'] . "</td>";
-            echo "<td>" . $row['gueltigBis'] . "</td>";
-            echo "<td>" . $row['erstelltam'] . "</td>";
-            echo "<td>" . $row['kategorie'] . "</td>";
-            echo "<td>" . $row['link'] . "</td>";
-            //bildlink in bild umformen mit a img
-            echo "<td><img src='" . $row['bild'] . "' alt='error 404'></a></td>";
-            
-            
-            echo "<td><form action='' method='post'><input type='hidden' name='delID' value='" . $row['newsid'] . "'><input type='submit' name='delete' value='Löschen'></form></td>";
-            echo "</tr>";
+<h3 id="titel">Ticket Löschen</h3>
+<div>
+    <?php
+    
+    $stmt = $conn->prepare("SELECT ticketID, titel, gueltigVon, gueltigBis, erstelltam, link FROM ticket WHERE nutzerid = ?");
+    $stmt->bind_param("i", $nutzerid);
+    $nutzerid = $_SESSION['id'];
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        }
-        echo "</table>";
+    // Create table
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Titel</th>";
+    echo "<th>Gültig von</th>";
+    echo "<th>Gültig bis</th>";
+    echo "<th>Erstellt am</th>";
+    echo "<th>Link</th>";
+    echo "<th>Löschen</th>";
+    echo "</tr>";
+
+    // Fill table with data
+    while ($row = $result->fetch_assoc()){
+        echo "<tr>";
+        echo "<td>" . $row['titel'] . "</td>";
+        echo "<td>" . $row['gueltigVon'] . "</td>";
+        echo "<td>" . $row['gueltigBis'] . "</td>";
+        echo "<td>" . $row['erstelltam'] . "</td>";
+        echo "<td>" . $row['link'] . "</td>";
+        echo "<td><form action='' method='post'><input type='hidden' name='delID' value='" . $row['ticketID'] . "'><input type='submit' name='delete' value='Löschen'></form></td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+    $stmt->close();
+
+    // Make the table look nice
+    echo "<style>table, th, td {border: 1px solid black; border-collapse: collapse; padding: 8px;} th {background-color: #f2f2f2;}</style>";
+
+    // Delete ticket
+    if (isset($_POST['delete'])){
+        $stmt = $conn->prepare("DELETE FROM ticket WHERE ticketID = ?");
+        $stmt->bind_param("i", $delID);
+        $delID = $_POST['delID'];
+        $stmt->execute();
         $stmt->close();
-        //make the table look nice
-        echo "<style>table, th, td {border: 1px solid black; border-collapse: collapse;}</style>";
-        //delete news
-        if (isset($_POST['delete'])){
-            $stmt = $conn->prepare("DELETE FROM news WHERE newsid = ?");
-            $stmt->bind_param("i", $delID);
-            $delID = $_POST['delID'];
-            $stmt->execute();
-            $stmt->close();
-            //reload page
-            echo "<meta http-equiv='refresh' content='0'>";
-        }
-       
-        ?>
-        <br>
-        <br>
-        <br>
-        
-    </div>
+        // Reload page
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
+    ?>
+    <br><br><br>
+</div>
+
     <h3 id="titel">News Bearbeiten</h3>
     <div>
         <?php
