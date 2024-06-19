@@ -252,97 +252,94 @@ if (isset($_POST['submit'])){
     <br><br><br>
 </div>
 
-    <h3 id="titel">News Bearbeiten</h3>
-    <div>
-        <?php
-        $stmt = $conn->prepare("SELECT newsid, titel, inhalt, gueltigVon, gueltigBis, erstelltam, kategorie, link, bild, autor FROM news INNER JOIN kategories ON news.kid = kategories.kid WHERE autor = ?");
-        $stmt->bind_param("i", $autor);
-        $autor = $_SESSION['id'];
-        $stmt->execute();
-        $result = $stmt->get_result();
-        // create table
-        echo "<table>";
-        echo "<tr>";
-        echo "<th>Titel</th>";
-        echo "<th>Inhalt</th>";
-        echo "<th>Gültig von</th>";
-        echo "<th>Gültig bis</th>";
-        echo "<th>Erstellt am</th>";
-        echo "<th>Kategorie</th>";
-        echo "<th>Link</th>";
-        echo "<th>Bild</th>";
-        echo "<th>Bearbeiten</th>";
-        echo "</tr>";
-        // fill table with data
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . $row['titel'] . "</td>";
-            echo "<td>" . $row['inhalt'] . "</td>";
-            echo "<td>" . $row['gueltigVon'] . "</td>";
-            echo "<td>" . $row['gueltigBis'] . "</td>";
-            echo "<td>" . $row['erstelltam'] . "</td>";
-            echo "<td>" . $row['kategorie'] . "</td>";
-            echo "<td>" . $row['link'] . "</td>";
-            // bildlink in bild umformen mit a img
-            echo "<td><img src='" . $row['bild'] . "' alt='error 404'></a></td>";
-            echo "<td><form action='' method='post'><input type='hidden' name='editID' value='" . $row['newsid'] . "'><input type='submit' name='edit' value='Bearbeiten'></form></td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-        $stmt->close();
-        
-        // Check if the form is submitted for editing
-        if (isset($_POST['edit'])) {
-            $editID = $_POST['editID'];
-            // Retrieve the news item based on the editID
-            $editStmt = $conn->prepare("SELECT * FROM news WHERE newsid = ?");
-            $editStmt->bind_param("i", $editID);
-            $editStmt->execute();
-            $editResult = $editStmt->get_result();
-            $editRow = $editResult->fetch_assoc();
-            $editStmt->close();
-        
-            // Display the form for updating the news item
-            echo "<h2>Update News Item</h2>";
-            echo "<form action='' method='post'>";
-            echo "<input type='hidden' name='updateID' value='" . $editRow['newsID'] . "'>";
-            echo "Title: <input type='text' name='title' value='" . $editRow['titel'] . "'><br>";
-            echo "Inhalt: <textarea name='content'>" . $editRow['inhalt'] . "</textarea><br>";
-            echo "Gültig von: <input type='text' name='gueltigVon' value='" . $editRow['gueltigVon'] . "'><br>";
-            echo "Gültig bis: <input type='text' name='gueltigBis' value='" . $editRow['gueltigBis'] . "'><br>";
-            echo "Link: <input type='text' name='link' value='" . $editRow['link'] . "'><br>";
-            echo "Bild (Bildlink): <input type='text' name='bild' value='" . $editRow['bild'] . "'><br>";
-            echo "<input type='submit' name='update' value='Update'>";
-            echo "</form>";
-        }
-        
-        // Check if the form is submitted for updating
-        if (isset($_POST['update'])) {
-            $updateID = $_POST['updateID'];
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-            $gueltigVon = $_POST['gueltigVon'];
-            $gueltigBis = $_POST['gueltigBis'];
-            $link = $_POST['link'];
-            $bild = $_POST['bild'];
-        
-            // Update the news item in the database
-            $updateStmt = $conn->prepare("UPDATE news SET titel = ?, inhalt = ?, gueltigVon = ?, gueltigBis = ?, link = ?, bild = ? WHERE newsid = ?");
-            $updateStmt->bind_param("ssssssi", $title, $content, $gueltigVon, $gueltigBis, $link, $bild, $updateID);
-            $updateStmt->execute();
-            $updateStmt->close();
-        
-            //reload page
-            echo "<meta http-equiv='refresh' content='0'>";
-        }
-        
-        ?>
-        <br>
-        <br>
-        <br>
+<h3 id="titel">Ticket Bearbeiten</h3>
+<div>
+    <?php
+  
 
-    </div>
-    
+    // Fügen Sie hier Ihre Datenbankverbindung ein
+    // $conn = new mysqli('servername', 'username', 'password', 'database');
+
+    // Get tickets created by the logged-in user
+    $stmt = $conn->prepare("SELECT ticketID, titel, gueltigVon, gueltigBis, erstelltam, link FROM ticket WHERE nutzerid = ?");
+    $stmt->bind_param("i", $nutzerid);
+    $nutzerid = $_SESSION['id'];
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Create table
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Titel</th>";
+    echo "<th>Gültig von</th>";
+    echo "<th>Gültig bis</th>";
+    echo "<th>Erstellt am</th>";
+    echo "<th>Link</th>";
+    echo "<th>Bearbeiten</th>";
+    echo "</tr>";
+
+    // Fill table with data
+    while ($row = $result->fetch_assoc()){
+        echo "<tr>";
+        echo "<td>" . $row['titel'] . "</td>";
+        echo "<td>" . $row['gueltigVon'] . "</td>";
+        echo "<td>" . $row['gueltigBis'] . "</td>";
+        echo "<td>" . $row['erstelltam'] . "</td>";
+        echo "<td>" . $row['link'] . "</td>";
+        echo "<td><form action='' method='post'><input type='hidden' name='editID' value='" . $row['ticketID'] . "'><input type='submit' name='edit' value='Bearbeiten'></form></td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+    $stmt->close();
+
+    // Make the table look nice
+    echo "<style>table, th, td {border: 1px solid black; border-collapse: collapse; padding: 8px;} th {background-color: #f2f2f2;}</style>";
+
+    // Check if the form is submitted for editing
+    if (isset($_POST['edit'])) {
+        $editID = $_POST['editID'];
+        // Retrieve the ticket based on the editID
+        $editStmt = $conn->prepare("SELECT * FROM ticket WHERE ticketID = ?");
+        $editStmt->bind_param("i", $editID);
+        $editStmt->execute();
+        $editResult = $editStmt->get_result();
+        $editRow = $editResult->fetch_assoc();
+        $editStmt->close();
+
+        // Display the form for updating the ticket
+        echo "<h2>Update Ticket</h2>";
+        echo "<form action='' method='post'>";
+        echo "<input type='hidden' name='updateID' value='" . $editRow['ticketID'] . "'>";
+        echo "Titel: <input type='text' name='titel' value='" . $editRow['titel'] . "'><br>";
+        echo "Gültig von: <input type='datetime-local' name='gueltigVon' value='" . $editRow['gueltigVon'] . "'><br>";
+        echo "Gültig bis: <input type='datetime-local' name='gueltigBis' value='" . $editRow['gueltigBis'] . "'><br>";
+        echo "Link: <input type='text' name='link' value='" . $editRow['link'] . "'><br>";
+        echo "<input type='submit' name='update' value='Update'>";
+        echo "</form>";
+    }
+
+    // Check if the form is submitted for updating
+    if (isset($_POST['update'])) {
+        $updateID = $_POST['updateID'];
+        $titel = $_POST['titel'];
+        $gueltigVon = $_POST['gueltigVon'];
+        $gueltigBis = $_POST['gueltigBis'];
+        $link = $_POST['link'];
+
+        // Update the ticket in the database
+        $updateStmt = $conn->prepare("UPDATE ticket SET titel = ?, gueltigVon = ?, gueltigBis = ?, link = ? WHERE ticketID = ?");
+        $updateStmt->bind_param("sssii", $titel, $gueltigVon, $gueltigBis, $link, $updateID);
+        $updateStmt->execute();
+        $updateStmt->close();
+
+        // Reload page
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
+    ?>
+    <br><br><br>
+</div>
+
     
     <div id="impressum">
          Impressum:<br/><br/> Herausgeber: <br/>Robin Rütter <br/>Rüchiweg 21 <br/>CH-4106 Therwil <br/>E-Mail: robin.ruetter@bluewin.ch <br> 
