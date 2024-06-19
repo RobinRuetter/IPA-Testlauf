@@ -54,7 +54,7 @@
     }*/
     ?>
     <div id="header">
-        <h1>News der IMS Basel</h1>
+        <h1>Wallet</h1>
 
         <div id="menu">
             <ul>
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div>
-    <h3 id="titel">News der IMS Basel</h3>
+    <h3 id="titel">Wallet</h3>
     <?php
 
 // Prepare the SQL statement to retrieve tickets for the user with ID 1
