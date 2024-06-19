@@ -385,7 +385,7 @@ if (isset($_POST['submit'])){
 
         // Update the ticket in the database
         $updateStmt = $conn->prepare("UPDATE ticket SET titel = ?, gueltigVon = ?, gueltigBis = ?, link = ? WHERE ticketID = ?");
-        $updateStmt->bind_param("sssii", $titel, $gueltigVon, $gueltigBis, $link, $updateID);
+        $updateStmt->bind_param("sssss", $titel, $gueltigVon, $gueltigBis, $link, $updateID);
         $updateStmt->execute();
         $updateStmt->close();
 
