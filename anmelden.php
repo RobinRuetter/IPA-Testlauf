@@ -45,7 +45,9 @@ if (isset ($_POST['submit'])){
         $ausgebe .= "<br> -Bitte ein gültiges Passwort eingeben";
     }
     
-   
+   //delete spaces at the start and end of the string
+   $Benutzername = trim($_POST['Benutzername']);
+   $Passwort = trim($_POST['Passwort']);
     //check if username is already used with $stmt
     $stmt = $conn->prepare ("select Benutzername from users where Benutzername = ?");
 
